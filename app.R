@@ -7,16 +7,44 @@ library(plotly)
 
 url <- "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/precotaxatesourodireto.csv"
 
-ui <- ui <- fluidPage(
+ui <- fluidPage(
     tags$div(
-        style = "background-color: #f8f9fa; padding: 10px; border-bottom: 1px solid #dee2e6; margin-bottom: 10px;",
-        tags$strong("Aplicativo produzido em Shiny por Gabriel Santos - Problemas, sugestões e colaborações favor ")
+        style = "background-color: #f8f9fa; padding: 15px; border-bottom: 1px solid #dee2e6; margin-bottom: 10px;",
+        
+        tags$p(
+            style = "margin: 0; font-style: italic; text-align: center;",
+            "Desenvolvido com carinho num domingo preguiçoso por ",
+            tags$a(href = "https://ecosantos.netlify.app/", target = "_blank", "Gabriel Santos")
+        ),
+        
+        tags$div(
+            style = "margin-top: 5px; display: flex; align-items: center; justify-content: center;",
+            tags$span("Dúvidas, sugestões e contribuições são bem-vindas."),
+            tags$a(href = "https://github.com/Ecosantos/TesouroShiny", target = "_blank",
+                   tags$img(src = "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg", 
+                            height = "24px", width = "24px", style = "margin-left: 10px;"))
+        )
     ),
+    
     titlePanel("📊 Análise Interativa - Tesouro Direto"),
     
     sidebarLayout(
         sidebarPanel(
             actionButton("atualizar", "🔄 Atualizar valores"),
+            helpText("Caso o botão de atualizar não funcione, copie e cole o link no espaço abaixo. Isso provavelmente ocorre pq o link é atualizado todos os dias."),
+            fluidRow(
+                column(6,
+                       tags$a(href = "https://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1?_gl=1*ahrcph*_gcl_au*NTA1NTkyMjk3LjE3NDY5MDEwNzQ.*_ga*NDMyMzU0OTY5LjE3NDY5MDEwNzU.*_ga_95FH8RQ7M0*czE3NDk0MTIzMjUkbzMkZzEkdDE3NDk0MTQ5MzEkajI3JGwwJGgw", 
+                              class = "btn btn-primary btn-block", target = "_blank", "📂 Acesse o histórico")
+                ),
+                column(6,
+                       tags$a(href = "#",  # Substitua o # pelo link real depois
+                              class = "btn btn-secondary btn-block", target = "_blank", "❓ Instruções")
+                )
+            ),
+            br(),
+            textInput("url_custom", "Link alternativo:", 
+                      placeholder = "Cole aqui o novo link CSV do Tesouro Direto"),
             hr(),
             uiOutput("controle_titulo"),
             uiOutput("controle_data")
@@ -27,6 +55,7 @@ ui <- ui <- fluidPage(
         )
     )
 )
+
 
 server <- function(input, output, session) {
     dados <- reactiveVal(NULL)
