@@ -1,0 +1,12 @@
+name: TesouroShiny
+title: TesouroShiny
+username: ecosantos
+account: ecosantos
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14901346
+bundleId: 10419566
+url: https://ecosantos.shinyapps.io/TesouroShiny/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
